@@ -96,19 +96,6 @@ server.post('/api/v1/jogo/excluir', async (req, res, next) => {
     return next();
 });
 
-server.del('/api/v1/database/reset', async (req, res, next) => {
-    try {
-        await pool.query('DROP TABLE IF EXISTS jogos');
-        await pool.query('CREATE TABLE jogos (id SERIAL PRIMARY KEY, nome VARCHAR(255) NOT NULL, genero VARCHAR(255) NOT NULL, valor VARCHAR(255) NOT NULL, plataforma VARCHAR(255) NOT NULL, zerado BOOLEAN)');
-        res.send(200, { message: 'Banco de dados resetado com sucesso' });
-        console.log('Banco de dados resetado com sucesso');
-    } catch (error) {
-        console.error('Erro ao resetar o banco de dados:', error);
-        res.send(500, { message: 'Erro ao resetar o banco de dados' });
-    }
-
-    return next();
-});
 
 const port = process.env.PORT || 5000;
 

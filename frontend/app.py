@@ -5,13 +5,13 @@ import os
 app = Flask(__name__)
 
 # Definindo as variáveis de ambiente
-API_BASE_URL = os.getenv("API_BASE_URL" , "http://localhost:5000/api/v1/jogo")
-API_DATABASE_RESET = os.getenv("API_DATABASE_RESET" , "http://localhost:5000/api/v1/database/reset") 
+API_BASE_URL = os.getenv("API_BASE_URL", "http://localhost:5000/api/v1/jogo")
+API_DATABASE_RESET = os.getenv("API_DATABASE_RESET", "http://localhost:5000/api/v1/database/reset") 
 
 # Rota para a página inicial
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('inserir.html')
 
 # Rota para exibir o formulário de cadastro
 @app.route('/inserir', methods=['GET'])
@@ -24,14 +24,14 @@ def inserir_jogo():
     nome = request.form['nome']
     genero = request.form['genero']
     valor = request.form['valor']
-    plataforma = request.form['plataforma']
+    plataformas = request.form.getlist('plataforma')
     zerado = True if request.form.get('zerado') else False
 
     payload = {
         'nome': nome,
         'genero': genero,
         'valor': valor,
-        'plataforma': plataforma,
+        'plataforma': plataformas,
         'zerado': zerado
     }
 
@@ -66,7 +66,7 @@ def atualizar_jogo(jogo_id):
     nome = request.form['nome']
     genero = request.form['genero']
     valor = request.form['valor']
-    plataforma = request.form['plataforma']
+    plataformas = request.form.getlist('plataforma')
     zerado = True if request.form.get('zerado') else False
 
     payload = {
@@ -74,7 +74,7 @@ def atualizar_jogo(jogo_id):
         'nome': nome,
         'genero': genero,
         'valor': valor,
-        'plataforma': plataforma,
+        'plataforma': plataformas,
         'zerado': zerado
     }
 
@@ -97,15 +97,6 @@ def excluir_jogo(jogo_id):
     else:
         return "Erro ao excluir jogo", 500
 
-# Rota para resetar o banco de dados
-@app.route('/reset-database', methods=['GET'])
-def resetar_database():
-    response = requests.delete(API_DATABASE_RESET)
-    
-    if response.status_code == 200:
-        return redirect(url_for('index'))
-    else:
-        return "Erro ao resetar o banco de dados", 500
 
 if __name__ == '__main__':
     app.run(debug=True, port=3000, host='0.0.0.0')
