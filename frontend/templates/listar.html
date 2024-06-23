@@ -10,9 +10,9 @@
             border: 1px solid #000000;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        /* Adicione a cor diferente para os jogos zerados */
-        .card-custom.zerado {
-            background-color: #44ad7b; /* Vermelho claro */
+        /* Estilo para jogos zerados */
+        .zerado {
+            background-color: #f8d7da; /* Vermelho claro */
         }
     </style>
 </head>
@@ -34,13 +34,22 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Filtrar por preço:</h4>
+                <a href="/listar?sort=asc">Preço Ascendente</a> |
+                <a href="/listar?sort=desc">Preço Descendente</a>
+            </div>
+        </div>
+    </div>
+
     {% if jogos %}
     <div class="container mt-4">
         <div class="row">
             {% for jogo in jogos %}
             <div class="col-md-4 mb-4">
-                <!-- Adicione a classe 'zerado' ao elemento caso o jogo tenha sido zerado -->
-                <div class="card card-custom h-100 {% if jogo.zerado %} zerado {% endif %}">
+                <div class="card card-custom h-100 {% if jogo.zerado %}zerado{% endif %}">
                     <div class="card-body">
                         <h5 class="card-title">{{ jogo.nome }}</h5>
                         <p class="card-text">

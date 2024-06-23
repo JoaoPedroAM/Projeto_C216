@@ -45,8 +45,20 @@ def inserir_jogo():
 # Rota para listar todos os jogos
 @app.route('/listar', methods=['GET'])
 def listar_jogos():
+    # Obter o parâmetro de consulta 'sort' da URL
+    sort_order = request.args.get('sort')
+
+    # Realizar a requisição à API para obter a lista de jogos
     response = requests.get(f'{API_BASE_URL}/listar')
     jogos = response.json()
+
+    # Verificar se o parâmetro 'sort' foi passado e aplicar a ordenação se necessário
+    if sort_order == 'asc':
+        jogos = sorted(jogos, key=lambda jogo: jogo['valor'])
+    elif sort_order == 'desc':
+        jogos = sorted(jogos, key=lambda jogo: jogo['valor'], reverse=True)
+
+    # Renderizar o template com a lista de jogos ordenada
     return render_template('listar.html', jogos=jogos)
 
 # Rota para exibir o formulário de edição de jogo
