@@ -24,7 +24,7 @@ def inserir_jogo():
     nome = request.form['nome']
     genero = request.form['genero']
     valor = request.form['valor']
-    plataformas = request.form.getlist('plataforma')
+    plataformas = request.form['plataforma']
     zerado = True if request.form.get('zerado') else False
 
     payload = {
@@ -78,7 +78,7 @@ def atualizar_jogo(jogo_id):
     nome = request.form['nome']
     genero = request.form['genero']
     valor = request.form['valor']
-    plataformas = request.form.getlist('plataforma')
+    plataformas = request.form['plataforma']
     zerado = True if request.form.get('zerado') else False
 
     payload = {
